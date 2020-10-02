@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="/static/styles.css">
+
+    <title>Predict the order</title>
+  </head>
+
+  <body >
+    <div class="container">
+      <div id="intestazione" class="row">
+          <h3 class="h3 mb-3 font-weight-normal text-center">
+          <span class="h3 mb-3 font-weight-normal text-center" style="padding-top: 50px">
+          Predict the order
+        </span>
+          <br>
+          <span style="display:block ;padding-top: 0px; text-indent: 70px" class="h5 mb-3 font-weight-normal text-center">among the number of coin units</span>
+          </h3>
+
+        </div>
+      </div>
+    </div>
+<form method="post" enctype=multipart/form-data>
+    <div class="container">
+
+      <div id="row2" class="row">
+
+          <div id="mode" class="col-lg-2 col-md-6"  >
+            <!--
+            <div class="modalita">
+              <input name="moda" id="singleImage" type="button" class="mode btn btn-outline-primary" data-view="cnn" onclick="get_cnn()" value="CNN - single image">  </input>
+              <input name="moda" id="snnClass" type="button" class="mode btn btn-outline-primary" data-view="snnClass" onclick="get_snnClass()" value="SNN - classification"></input>
+              <input name="moda" id="snnMetric" type="button" class="mode btn btn-outline-primary" data-view="snnMetric" onclick="get_snnMetric()" value="SNN - metric learning"></input>
+            </div>-->
+            <p id="metodo" style=" margin-bottom:10px">Testing Method</p>
+            <div class="modalita">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mode" id="cnn" value="cnn" >
+                        <label class="form-check-label" for="exampleRadios1">
+                            CNN - single image
+                        </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mode" id="snnClass" value="snnClass">
+                        <label class="form-check-label" for="exampleRadios2">
+                            SNN - classification
+                        </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="mode" id="snnMetric" value="snnMetric">
+                        <label class="form-check-label" for="exampleRadios2">
+                            SNN - metric learning
+                        </label>
+                </div>
+              </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6" >
+            <p id="nn"style=" margin-bottom:10px">Neural Network</p>
+            <div class="reti" style="padding-left:20%; top: 50px;">
+              <!--
+              <input name="rete" type="button" class="rete btn btn-outline-primary" data-view="Mnet" onclick="get_MNet()" value="MNet"></input>
+              <input name="rete" type="button" class="rete btn btn-outline-primary" data-view="ResNet" onclick="get_ResNet()" value="ResNet34"></input>
+            -->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="network" id="MNet" value="MNet" >
+                    <label class="form-check-label" for="exampleRadios1">
+                        MNet
+                    </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="network" id="ResNet" value="ResNet">
+                    <label class="form-check-label" for="exampleRadios2">
+                        ResNet34
+                    </label>
+            </div>
+
+
+
+
+            </div>
+          </div>
+          <div id="selezione" class="col-lg-6 col-md-12"   >
+
+              <div id="inputPair" class="input-group input-group-sm mb-3" >
+                <div class="input-group-prepend" style="width:50%" >
+                  <span class="input-group-text pair" id="inputGroup-sizing-sm">idPair</span>
+                  <input name="idpair" id="idPair" style="width:100%" type="number" class="form-control" aria-label="Small" min="0" max="13824" placeholder="[0 - 13824]" aria-describedby="inputGroup-sizing-sm" onfocus="get_idPair()" >
+                </div>
+              </div>
+
+              <hr>
+              <span style="font-size:0.8em"> or choose file</span>
+              <hr>
+              <div>
+                <div id="file1" >
+                      <div  class="custom-file mb-3">
+                      <input type="file" accept="image/*" class="custom-file-input" id="customFile1" name="filename1" placeholder="Choose Image_1" >
+                      <label class="custom-file-label" for="customFile">Choose Image_1</label>
+                      </div>
+                </div>
+                <div id="file2">
+                      <div  class="custom-file mb-3">
+                      <input type="file" accept="image/*" class="custom-file-input" id="customFile2" name="filename2" placeholder="Choose Image_2" >
+                      <label class="custom-file-label" for="customFile">Choose Image_2</label>
+
+                      </div>
+                </div>
+              </div>
+          </div>
+
+        <div style="border:none"class="col-lg-2 col-md-12">
+
+            <button id="bottoneTest" type="submit" class="btn btn-secondary"  onclick="start_Test()">Test</button>
+
+        </div>
+
+     </div>
+   </form>
+
+
+      </div>
+    </div>
+
+    <div class="container-fluid" >
+    <div class="row">
+      <footer class="footer footer-black  footer-white ">
+          <div class="credits ml-auto">
+
+              <span class="copyright">
+
+                ©
+                  <script>
+                    document.write(new Date().getFullYear())
+                    </script>, made with <i class="fa fa-heart heart"></i> by Rosa
+              </span>
+          </div>
+      </footer>
+</div>
+</div>
+
+    <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+
+
+  <!--  Google Maps Plugin    -->
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+  <!-- Chart JS -->
+  <script src="js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
+  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+ <!--  <script type="text/javascript" src="js/script.js"></script>-->
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+
+  </body>
+</html>
